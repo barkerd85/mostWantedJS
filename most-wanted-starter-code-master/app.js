@@ -16,12 +16,21 @@ function app(people){
       displayPerson(searchResults)
       break;
     case 'no':
-      searchResults = searchByTrait(people);
-      // maybe function to ask to end
-      break;
-      default: 
-    app(people); // restart app
-      break;
+       // TODO: search by traits
+       let traitSearchType = promptFor(`What trait would you like to search for? 
+       Enter "1" to search by gender
+       Enter "2" to search by birthdate
+       Enter "3" to search by height
+       Enter "4" to search by weight
+       Enter "5" to search by eye color
+       Enter "6" to search by occupation
+       Enter "7" to search by a parent's name
+       Enter "8" to search by a spouse's name`,traitChoice);
+       searchResults = searchByTrait(traitSearchType);
+       break;
+       default:
+     app(people); // restart app
+       break;
   }
   mainMenu(searchResults, people)
 }
@@ -58,7 +67,7 @@ function mainMenu(person, people){
   }
 }
 
-function searchByTrait(people){
+/*function searchByTrait(people){
   let userInput = promptFor("Would you like to search by eye color, gender, height, weight or occupation?", autoValid).toLowerCase();
   let resultTrait = "";
   switch(userInput) {
@@ -85,7 +94,7 @@ function searchByTrait(people){
       default:
       searchByTrait(people); // ask again
     }
-}
+}*/
 
 function onePerson(searchResults, people) {
   if (searchResults.length == 1) {
@@ -119,9 +128,49 @@ function searchByName(people){
 
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
+function searchByTrait(traitType){
+  traitType = parseInt(traitType);
+  switch(traitType){
+    case 1:
+      let genderChoice = prompt("Enter a gender to search by.");
+      searchByGender(genderChoice);
+      break;
+    case 2:
+      let dobChoice = prompt("Enter a birthdate to search by.");
+      searchByDOB(dobChoice);
+      break;
+    case 3:
+      let heightChoice = prompt("Enter a height to search by.");
+      searchByHeight(heightChoice);
+      break;
+    case 4:
+      let weightChoice = prompt("Enter a weight to search by.");
+      searchByWeight(weightChoice);
+      break;
+    case 5:
+      //TODO (Gary) Give specific choices and validate - green, blue, grey, brown, black
+      let eyeColorChoice = prompt("Enter an eye color to search by.");
+      searchByEyeColor(eyeColorChoice);
+      break;
+    case 6:
+      let jobChoice = prompt("Enter an occupation to search by.");
+      searchByJob(jobChoice);
+      break;
+    case 7:
+      let parentsChoice = prompt("Enter a parent\'s name to search by.");
+      searchByParents(parentsChoice);
+      break;
+    case 8:
+        let spouseChoice = prompt("Enter a spouse to search by.");
+        searchBySpouse(spouseChoice);
+        break;
+    default:
+    alert("That\'s and invalid entry"); // ask again
+  }
+}
+/*==============================================*/
 function searchByEyeColor(people){
-    let eyeColor = promptFor("What is the person's eye color?", autoValid).toLowerCase();
-
+    let eyeColor = promptFor("What is the person's eye color?", autoValid).toLowerCase();    
     let foundPerson = people.filter(function(potentialMatch){
       if(potentialMatch.eyeColor === eyeColor){
         return true;
@@ -132,7 +181,7 @@ function searchByEyeColor(people){
   })
   return foundPerson;
 }
-
+/*==============================================*/
 function searchByHeight(people){
     let height = promptFor("What is the person's height?", autoValid);
 
@@ -191,7 +240,16 @@ function searchByOccupation(people){
   })
   return foundPerson;
 }
+function searchByDOB(dobChoice){
+  alert("Create DOB search");
+}
+function searchByParents(parentsChoice){
+  alert("Create parents search");
+}
 
+function searchBySpouse(spouseChoice){
+  alert("Create spouse search");
+}
 //#endregion
 
 //Display functions.
@@ -305,7 +363,14 @@ function yesNo(input){
     return false;
   }
 }
-
+function traitChoice(input){
+  if(parseInt(input) >= 1 && parseInt(input) <= 8){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
 // helper function to pass in as default promptFor validation.
 //this will always return true for all inputs.
 function autoValid(input){
