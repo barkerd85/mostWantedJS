@@ -313,6 +313,25 @@ function findDescendants(person, people){
 return foundDescendants
 }
 
+
+function findDescendentOfDescendants(person, people){
+  let newList = [];
+  
+  for(var i = 0; i < person.length; i++){
+    var foundDes = people.filter(function(person){
+      if(person.parents.includes(person[i].id)){
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+  for(var i = 0; i < foundDes.length; i++){
+    newList.push(foundDes[i]);
+  }
+  return newList;
+}
+
 //#endregion
 
 //Validation functions.
