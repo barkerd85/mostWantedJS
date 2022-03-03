@@ -203,18 +203,30 @@ function searchByDOB(people){
   })
   return foundPerson;
 }
-function searchByParents(people){
-  let parents = promptFor("Who is the person\'s parent?", autoValid).toLowerCase();
+// function searchByParents(people){
+//   let parents = promptFor("Who is the person\'s parent?", autoValid).toLowerCase();
 
-  let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.parents === parents){
+//   let foundPerson = people.filter(function(potentialMatch){
+//     if(potentialMatch.parents === parents){
+//       return true;
+//     }
+//     else{
+//       return false;
+//     }
+//   })
+//   return foundPerson;
+// }
+
+function findParents(person, people) {
+  var person = person;
+  let foundParents = people.filter(function(element){
+    if(element.id === person[0].parents[0] || element.id === person[0].parents[1]) {
       return true;
-    }
-    else{
+    } else {
       return false;
     }
   })
-  return foundPerson;
+return foundParents
 }
 
 function searchBySpouse(people){
@@ -257,10 +269,23 @@ function displayPerson(person){
 
 function displayFamily(person, people){
   let parentsFound = findParents(person, people);
-  let parent1 = "First parent: " + parentsFound[0].firstName + " " + parentsFound[0].lastName;
-  let parent2 =  "Second parent: " + parentsFound[1].firstName + " " + parentsFound[1].lastName;
+  let parent1;
+  let parent2;
+  let currentSpouse;
+
+
+
+  if (parentsFound[0]){
+    parent1 = "First parent: " + parentsFound[0].firstName + " " + parentsFound[0].lastName;
+    if (parentsFound[1]){
+      parent2 =  "Second parent: " + parentsFound[1].firstName + " " + parentsFound[1].lastName;
+      }
+  }
   let spouseFound = findSpouse(person, people);
-  let currentSpouse = "Current Spouse: " + spouseFound[0].firstName + " " + spouseFound[0].lastName;
+  if (spouseFound[0]){
+  currentSpouse = "Current Spouse: " + spouseFound[0].firstName + " " + spouseFound[0].lastName;
+  }
+  
   alert(parent1+'\n'+parent2+'\n'+currentSpouse+'\n');
 }
 
@@ -382,3 +407,4 @@ function customValidation(input){
 }
 
 //#endregion
+
