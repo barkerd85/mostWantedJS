@@ -51,7 +51,10 @@ function mainMenu(person, people){
     app(people); // restart
     break;
     case "quit":
-    return; // stop execution
+    if(confirm("Are you sure? This will end the search.") = true){
+      window.location.reload();
+    };
+     // stop execution
     default:
     return mainMenu(person, people); // ask again
   }
@@ -61,46 +64,78 @@ function searchByTrait(people){
   //let userInput = promptFor("Would you like to search by eye color, gender, height, weight, occupation, birthdate, spouse or a parent?", autoValid).toLowerCase();
   let resultTrait = people;
   while(resultTrait.length > 1){
-    let userInput = promptFor("Would you like to search by eye color, gender, height, weight, occupation, birthdate, spouse or a parent?", autoValid).toLowerCase();
+    let userInput = promptFor("Would you like to search by eye color, gender, height, weight, occupation or birthdate?", autoValid).toLowerCase();
     people = resultTrait;
     switch(userInput) {
       case "eye color":
         resultTrait = searchByEyeColor(people);
-        displayPeople(resultTrait);
+        if(resultTrait.length >= 1){
+          displayPeople(resultTrait);}
+          else{
+            confirm('That search yields no results. Would you like to search by another trait?');
+            searchByTrait(people);
+          }
         break;
       case "gender":
         resultTrait = searchByGender(people);
-        displayPeople(resultTrait);
+        if(resultTrait.length >= 1){
+          displayPeople(resultTrait);}
+          else{
+            confirm('That search yields no results. Would you like to search by another trait?');
+            searchByTrait(people);
+          }
         break;
       case "height":
         resultTrait = searchByHeight(people);
-        displayPeople(resultTrait);
+        if(resultTrait.length >= 1){
+          displayPeople(resultTrait);}
+          else{
+            confirm('That search yields no results. Would you like to search by another trait?');
+            searchByTrait(people);
+          }
         break;
       case "weight":
         resultTrait = searchByWeight(people);
-        displayPeople(resultTrait);
+        if(resultTrait.length >= 1){
+          displayPeople(resultTrait);}
+          else{
+            confirm('That search yields no results. Would you like to search by another trait?');
+            searchByTrait(people);
+          }
         break;
       case "occupation":
         resultTrait = searchByOccupation(people);
-        displayPeople(resultTrait);
-        break;
-      case "spouse":
-        resultTrait = searchBySpouse(people);
-        displayPeople(resultTrait);
-        break;
-      case "parent":
-        resultTrait = searchByParents(people);
-        displayPeople(resultTrait);
+        if(resultTrait.length >= 1){
+          if(resultTrait.length >= 1){
+            displayPeople(resultTrait);}
+            else{
+              confirm('That search yields no results. Would you like to search by another trait?');
+              searchByTrait(people);
+            }}
+        else{
+          confirm('That search yields no results. Would you like to search by another trait?');
+          searchByTrait(people);
+        }
         break;
       case "birthdate":
         resultTrait = searchByDOB(people);
-        displayPeople(resultTrait);
+        if(resultTrait.length >= 1){
+          displayPeople(resultTrait);}
+          else{
+            confirm('That search yields no results. Would you like to search by another trait?');
+            searchByTrait(people);
+          }
         break;
     default:
         searchByTrait(people); // ask again
       }
   }  
+  if(resultTrait.length = 1){
   mainMenu(resultTrait, people);
+  }else{
+    confirm('That search yields no results. Would you like to search by another trait?');
+    searchByTrait(people);
+  }
 }
 
 //Filter functions.
@@ -220,7 +255,7 @@ function searchByParents(people){
 function searchBySpouse(people){
   let spouse = promptFor("Who is the person\'s spouse?", autoValid).toLowerCase();
   let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.spouse === spouse){
+    if(potentialMatch.currentSpouse === spouse){
       return true;
     }
     else{
