@@ -61,7 +61,7 @@ function searchByTrait(people){
   //let userInput = promptFor("Would you like to search by eye color, gender, height, weight, occupation, birthdate, spouse or a parent?", autoValid).toLowerCase();
   let resultTrait = people;
   while(resultTrait.length > 1){
-    let userInput = promptFor("Would you like to search by eye color, gender, height, weight, occupation, birthdate, spouse or a parent?", autoValid).toLowerCase();
+    let userInput = promptFor("Would you like to search by eye color, gender, height, weight, occupation, birthdate?", autoValid).toLowerCase();
     people = resultTrait;
     switch(userInput) {
       case "eye color":
@@ -82,14 +82,6 @@ function searchByTrait(people){
         break;
       case "occupation":
         resultTrait = searchByOccupation(people);
-        displayPeople(resultTrait);
-        break;
-      case "spouse":
-        resultTrait = searchBySpouse(people);
-        displayPeople(resultTrait);
-        break;
-      case "parent":
-        resultTrait = searchByParents(people);
         displayPeople(resultTrait);
         break;
       case "birthdate":
